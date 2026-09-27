@@ -1,0 +1,63 @@
+# ─────────────────────────────────────────────────────────────
+#  JobBot configuration — edit this, then restart the container.
+# ─────────────────────────────────────────────────────────────
+
+# How often the bot searches (minutes)
+schedule_minutes: 180
+
+# ── Filters ──────────────────────────────────────────────────
+# All matching is case-insensitive and whole-word.
+filters:
+  # Job TITLE must contain at least one of these (leave [] to skip)
+  title_any: ["intern", "internship", "trainee", "graduate", "junior",
+              "becario", "becaria", "prácticas", "practicas", "stage", "werkstudent"]
+
+  # Title is rejected if it contains any of these
+  exclude_title_any: ["senior", "sr", "lead", "principal", "manager", "director", "head"]
+
+  # Title + description is rejected if it contains any of these
+  exclude_any: ["10+ years", "8+ years", "5+ years"]
+
+  # Title + description must contain at least `min_keyword_hits` of these
+  keywords_any: ["materials", "materials science", "metallurgy", "polymer", "polymers",
+                 "ceramics", "composites", "battery", "batteries", "thin film",
+                 "characterization", "SEM", "XRD", "R&D", "nanomaterials", "chemistry"]
+  min_keyword_hits: 1
+
+  # Location must contain one of these (leave [] to accept anywhere)
+  locations_any: ["barcelona", "catalonia", "cataluña", "spain", "españa", "remote", "europe"]
+
+  # Ignore postings older than this
+  max_age_days: 30
+
+# ── Sources ──────────────────────────────────────────────────
+sources:
+  # Adzuna: large aggregator with a free official API (needs ADZUNA_APP_ID / ADZUNA_APP_KEY in .env)
+  adzuna:
+    enabled: true
+    country: es            # es, gb, de, fr, nl, it, us, ...
+    where: "Barcelona"
+    pages: 2               # 50 results per page, per query
+    queries:
+      - "materials internship"
+      - "prácticas ingeniería de materiales"
+      - "materials engineer intern"
+
+  # Company career boards — public, no key needed.
+  # The "token" is the name in the company's careers URL:
+  #   boards.greenhouse.io/<token>       → greenhouse
+  #   jobs.lever.co/<token>              → lever   (use "eu:<token>" for jobs.eu.lever.co)
+  #   jobs.ashbyhq.com/<token>           → ashby
+  greenhouse: []           # e.g. ["somecompany"]
+  lever: []
+  ashby: []
+
+# ── Notifications (secrets go in .env) ───────────────────────
+notify:
+  telegram: false          # needs TELEGRAM_BOT_TOKEN + TELEGRAM_CHAT_ID
+  email: false             # needs SMTP_* variables
+
+# ── Cover-letter drafts (optional, needs ANTHROPIC_API_KEY) ──
+cover_letter:
+  enabled: false
+  profile_file: profile.md # your CV / background in plain text
