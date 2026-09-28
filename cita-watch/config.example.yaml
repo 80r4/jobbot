@@ -16,7 +16,7 @@ province: 8
 tramite: 4010
 
 doc_type: nie            # nie | passport | dni
-doc_number: "Y0000000X"
+doc_number: "Y0000000Z"      # checked at startup: a typo in the final letter is caught
 full_name: "NOMBRE APELLIDO APELLIDO"
 
 # Only needed if the trámite's form asks for them.
@@ -24,10 +24,29 @@ full_name: "NOMBRE APELLIDO APELLIDO"
 country: null
 birth_year: null
 
+# Pre-filled on the contact page after you pick an office (you still confirm).
+phone: null              # 9 digits, no +34, e.g. "612345678"
+email: null
+
 # Polling. Minimum 120 s is enforced; 5 min + jitter is a sane default.
+# All hours are Spanish (Europe/Madrid) time, whatever your computer's clock says.
 interval_seconds: 300
 jitter_seconds: 90
 active_hours: [8, 23]    # only check between 08:00 and 22:59; set null for 24/7
+
+# Check more often when slots are usually released. days: 0 = Mon ... 6 = Sun.
+# Run `python cita_watch.py --stats` after a few days to tune this to your province.
+peak_windows:
+  - days: [0, 1, 2, 3, 4]
+    hours: [8, 10]
+    interval_seconds: 150
+
+# How long to hold things for you before going back to watching (minutes).
+available_wait_minutes: 10   # slot page is open, waiting for you to book
+human_wait_minutes: 10       # CAPTCHA / missing-field prompts
+
+# Daily "still running" Telegram message at this hour; null to turn off.
+heartbeat_hour: 9
 
 # Optional Telegram alerts (create a bot with @BotFather, get chat id from @userinfobot)
 telegram_bot_token: null

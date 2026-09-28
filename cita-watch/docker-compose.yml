@@ -1,0 +1,28 @@
+services:
+  watcher:
+    build: .
+    restart: unless-stopped
+    shm_size: 1gb                 # Chromium needs more shared memory than Docker's default
+    volumes:
+      - ./data:/data              # config.yaml, browser profile, screenshots, history.csv
+    expose:
+      - "8080"
+      - "6080"
+
+  caddy:                          # HTTPS + your domain + password, automatic certificates
+    image: caddy:2
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - watcher
+
+volumes:
+  caddy_data:
+  caddy_config:

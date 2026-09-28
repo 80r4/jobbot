@@ -1,0 +1,13 @@
+{$DOMAIN} {
+	encode gzip
+	# Everything (panel + remote browser) is behind a password
+	basic_auth {
+		{$CITA_USER} {$CITA_PASS_HASH}
+	}
+	handle_path /vnc/* {
+		reverse_proxy watcher:6080
+	}
+	handle {
+		reverse_proxy watcher:8080
+	}
+}

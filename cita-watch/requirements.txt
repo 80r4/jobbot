@@ -1,3 +1,4 @@
 playwright>=1.44
 pyyaml>=6.0
 requests>=2.31
+tzdata>=2024.1   # Europe/Madrid time zone data on Windows / slim images

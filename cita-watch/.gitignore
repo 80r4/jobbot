@@ -1,0 +1,8 @@
+config.yaml
+.env
+data/
+screenshots/
+.browser-profile/
+history.csv
+__pycache__/
+.pytest_cache/
