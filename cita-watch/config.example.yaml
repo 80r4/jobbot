@@ -1,0 +1,37 @@
+# Copy to config.yaml and fill in. This file stays on your machine.
+
+# Province code (Barcelona = 8, Madrid = 28, Valencia = 46, Málaga = 29, ...)
+province: 8
+
+# Trámite code. Common ones:
+#   4010  POLICÍA - TOMA DE HUELLAS (expedición de TIE) y renovación larga duración
+#   4036  POLICÍA - RECOGIDA DE TIE
+#   4031  Asignación de NIE
+#   4096  POLICÍA - CERTIFICADOS Y ASIGNACIÓN NIE
+#   4038  POLICÍA - CERTIFICADO DE REGISTRO DE CIUDADANO UE
+#   4049  POLICÍA - CERTIFICADOS (residencia, no residencia, concordancia)
+#   20    POLICÍA - AUTORIZACIÓN DE REGRESO
+# Codes differ per province — if unsure, open the site, pick your trámite,
+# and read the number from the dropdown option (right-click → Inspect).
+tramite: 4010
+
+doc_type: nie            # nie | passport | dni
+doc_number: "Y0000000X"
+full_name: "NOMBRE APELLIDO APELLIDO"
+
+# Only needed if the trámite's form asks for them.
+# Country must match the dropdown text exactly (uppercase, no accents), e.g. MARRUECOS
+country: null
+birth_year: null
+
+# Polling. Minimum 120 s is enforced; 5 min + jitter is a sane default.
+interval_seconds: 300
+jitter_seconds: 90
+active_hours: [8, 23]    # only check between 08:00 and 22:59; set null for 24/7
+
+# Optional Telegram alerts (create a bot with @BotFather, get chat id from @userinfobot)
+telegram_bot_token: null
+telegram_chat_id: null
+
+# Use your installed Chrome instead of Playwright's Chromium: "chrome"
+browser_channel: null
